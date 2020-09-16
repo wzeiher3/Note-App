@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ApiContext from '../ApiContext';
 import './AddNote.css';
 import ValidationError from '../ValidationError'
+import Option from '../Option'
+import PropTypes from 'prop-types'
 
 class AddNote extends Component {
    static contextType = ApiContext;
@@ -57,14 +59,16 @@ class AddNote extends Component {
     const newFolderId = newFolder.id;
     console.log(newFolderId);
     const newContent = event.target.content.value;
-    
+    const newModified =  new Date();
+    newModified.toISOString();
     
     
     const newNote = {
         name: newName,
         id: newName,
         folderId: newFolderId,
-        content : newContent, 
+        content : newContent,
+        modified: newModified
     }
     
     fetch(`http://localhost:9090/notes`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(newNote)})
@@ -94,16 +98,18 @@ class AddNote extends Component {
   }
 
 
-  validateFolder() {
-    const folder = this.state.folder.value.trim();
-    const isFolder = this.findFolder(folder);
+  // validateFolder() {
+  //   const folder = this.state.folder.value.trim();
+  //   const isFolder = this.findFolder(folder);
     
-    if (isFolder === undefined) {
-      return "folder does not exist";
-    } else if (folder.length === 0) {
-      return "You must type in a folder";
-    } 
-  }
+  //   if (isFolder === undefined) {
+  //     return "folder does not exist";
+  //   } else if (folder.length === 0) {
+  //     return "You must type in a folder";
+  //   } 
+  // }
+
+
 
   validateContent() {
     const content= this.state.content.value.trim();
@@ -115,9 +121,10 @@ class AddNote extends Component {
 
   render() {
    
+    const {folders} = this.context;
     console.log(this.context);
     const nameError = this.validateName();
-    const folderError = this.validateFolder();
+    //const folderError = this.validateFolder();
     const contentError = this.validateContent();
    
     return (
@@ -135,9 +142,16 @@ class AddNote extends Component {
 
           <div className="form-group">
               <label htmlFor="newFolderName" className="noteLabels">Folder: </label>
-              <input id="newFolderName" type="text"  placeholder="Folder" name="newFolderName"
-                      onChange={e => this.updateFolder(e.target.value)} />
-              {this.state.folder.touched && <ValidationError message={folderError} />}
+              <select id="newFolderName"  placeholder="Folder" name="newFolderName"
+                      onChange={e => //this.updateFolder(e.target.value)
+                          console.log(e.target.value)
+                      } >
+                      {folders.map((folder, i) => 
+                          <option key={i+1} value={folder.name}>{folder.name}</option>
+                          //<Option key={i+1} value={folder.name} />
+                      )}  
+              </select>
+              {/* {this.state.folder.touched && <ValidationError message={folderError} />} */}
           </div>
           <br />
 
@@ -152,7 +166,7 @@ class AddNote extends Component {
           <div className="submitNote">
             <button className="AddSubmit" id="submit" type="submit" disabled={
               this.validateName() ||
-              this.validateFolder() ||
+              //this.validateFolder() ||
               this.validateContent()
             }>Submit</button>
           </div>   
@@ -170,3 +184,7 @@ class AddNote extends Component {
   }
 }
 export default AddNote;
+
+AddNote.propTypes = {
+    folders: PropTypes.array
+}

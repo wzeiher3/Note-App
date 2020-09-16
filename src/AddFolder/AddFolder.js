@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ApiContext from '../ApiContext';
 import ValidationError from '../ValidationError'
 import './AddFolder.css';
+//import PropTypes from 'prop-types'
 
 
 class AddFolder extends Component {
@@ -92,3 +93,7 @@ class AddFolder extends Component {
   }
 }
 export default AddFolder;
+
+// AddFolder.propTypes = {
+//   folders: PropTypes.array
+// }
