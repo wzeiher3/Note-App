@@ -43,7 +43,7 @@ class AddNote extends Component {
   }
   
    findFolder = folderName => {
-    const {folders} = this.context;
+    const {folders} = this.props;
     return folders.find(folder => 
           folder.name === folderName
       )
@@ -121,7 +121,7 @@ class AddNote extends Component {
 
   render() {
    
-    const {folders} = this.context;
+    const {folders} = this.props;
     console.log(this.context);
     const nameError = this.validateName();
     //const folderError = this.validateFolder();
@@ -186,5 +186,5 @@ class AddNote extends Component {
 export default AddNote;
 
 AddNote.propTypes = {
-    folders: PropTypes.array
+    folders: PropTypes.array.isRequired
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ApiContext from '../ApiContext';
 import ValidationError from '../ValidationError'
 import './AddFolder.css';
-//import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 
 class AddFolder extends Component {
