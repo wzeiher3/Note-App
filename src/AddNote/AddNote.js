@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ApiContext from '../ApiContext';
 import './AddNote.css';
 import ValidationError from '../ValidationError'
-import Option from '../Option'
+
 import PropTypes from 'prop-types'
 
 class AddNote extends Component {

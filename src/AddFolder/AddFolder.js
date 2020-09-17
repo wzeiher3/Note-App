@@ -94,6 +94,6 @@ class AddFolder extends Component {
 }
 export default AddFolder;
 
-// AddFolder.propTypes = {
-//   folders: PropTypes.array
-// }
+AddFolder.propTypes = {
+   history: PropTypes.object.isRequired
+}
